@@ -9,6 +9,17 @@ const config: Config = {
     "./src/**/*.{ts,tsx}",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "rounded-xl",
+    "rounded-t-xl",
+    "rounded-b-xl",
+    "border-t",
+    "border-b",
+    "border-t-white/40",
+    "border-b-white/40",
+    "border-b-gray-700",
+    "border-gray-700",
+  ],
   prefix: "",
   theme: {
     container: {
