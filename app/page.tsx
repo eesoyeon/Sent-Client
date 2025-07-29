@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { MainDashboard } from "@/components/main-dashboard";
+import TodosPage from '@/app/todos/page';
+import { useState, useEffect } from 'react';
 
 export default function HomePage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -9,11 +9,11 @@ export default function HomePage() {
 
   useEffect(() => {
     const checkAuthAndDecideFlow = async () => {
-      const token = localStorage.getItem("auth_token");
+      const token = localStorage.getItem('auth_token');
 
       if (!token) {
         // 토큰이 없으면 로그인 페이지로 (애니메이션 없이)
-        window.location.href = "/auth";
+        window.location.href = '/auth';
         return;
       }
 
@@ -38,8 +38,7 @@ export default function HomePage() {
     return null; // 리다이렉트 중
   }
 
-  // return <MainDashboard />;
-  return (window.location.href = "/todos");
+  return <TodosPage />;
 }
 
 // 로그인된 사용자를 위한 빠른 로딩 화면
@@ -64,15 +63,15 @@ function QuickLoadingScreen() {
         <div className="flex justify-center space-x-1">
           <div
             className="w-2 h-2 bg-white rounded-full animate-bounce"
-            style={{ animationDelay: "0ms" }}
+            style={{ animationDelay: '0ms' }}
           ></div>
           <div
             className="w-2 h-2 bg-white rounded-full animate-bounce"
-            style={{ animationDelay: "150ms" }}
+            style={{ animationDelay: '150ms' }}
           ></div>
           <div
             className="w-2 h-2 bg-white rounded-full animate-bounce"
-            style={{ animationDelay: "300ms" }}
+            style={{ animationDelay: '300ms' }}
           ></div>
         </div>
       </div>
