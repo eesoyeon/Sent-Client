@@ -6,7 +6,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Settings, LogOut, Type, Bell, HelpCircle, ChevronRight, Edit } from 'lucide-react';
 import { FontSizeSelector } from '@/components/font-size-selector';
-import { MinimalNavigation } from '@/components/HeaderNavigation/minimal-navigation';
 
 interface UserProfile {
   displayName: string;
@@ -54,8 +53,6 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-black">
-      <MinimalNavigation title="프로필" currentPage="profile" />
-
       <main className="pt-20 pb-8">
         {/* 프로필 헤더 */}
         <div className="px-6 py-8">
