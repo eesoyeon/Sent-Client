@@ -20,9 +20,9 @@ interface Category {
 interface Todo {
   title: string
   completed: boolean
-  priority: "high" | "medium" | "low"
+  priority?: "high" | "medium" | "low"
   categoryId: string
-  dueDate: string
+  dueDate?: string
   dueTime?: string
 }
 

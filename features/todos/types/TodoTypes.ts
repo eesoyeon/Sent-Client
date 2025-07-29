@@ -3,7 +3,7 @@ type ISODateString = string; // "2025-07-21"
 
 export interface Todo {
   title: string;
-  targetDate: ISODateString;
+  scheduleDate: ISODateString;
   completed: boolean;
   categoryId: string;
   alarm?: string;

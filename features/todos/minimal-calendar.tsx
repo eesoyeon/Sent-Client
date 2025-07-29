@@ -1,120 +1,155 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { CreatedTodo } from '@/features/todos/types/TodoTypes';
 
-interface Todo {
-  id: string
-  title: string
-  completed: boolean
-  dueDate: string
-  dueTime?: string
-}
+// interface Todo {
+//   id: string;
+//   title: string;
+//   completed: boolean;
+//   dueDate: string;
+//   dueTime?: string;
+// }
 
 interface MinimalCalendarProps {
-  selectedDate: Date
-  onDateSelect: (date: Date) => void
-  getTodosForDate: (date: Date) => Todo[]
+  selectedDate: Date;
+  onDateSelect: (date: Date) => void;
+  getTodosForDate: (date: Date) => CreatedTodo[];
 }
 
 interface DateStatus {
-  total: number
-  completed: number
-  hasOverdue: boolean
-  isEmpty: boolean
+  total: number;
+  completed: number;
+  hasOverdue: boolean;
+  isEmpty: boolean;
 }
 
-export function MinimalCalendar({ selectedDate, onDateSelect, getTodosForDate }: MinimalCalendarProps) {
-  const [currentMonth, setCurrentMonth] = useState(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1))
+export function MinimalCalendar({
+  selectedDate,
+  onDateSelect,
+  getTodosForDate,
+}: MinimalCalendarProps) {
+  const [currentMonth, setCurrentMonth] = useState(
+    new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
+  );
 
-  const today = new Date()
-  const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate()
-  const firstDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay()
-  const lastDayOfPrevMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 0).getDate()
+  const today = new Date();
+  const daysInMonth = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth() + 1,
+    0
+  ).getDate();
+  const firstDayOfMonth = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth(),
+    1
+  ).getDay();
+  const lastDayOfPrevMonth = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth(),
+    0
+  ).getDate();
 
-  const weekDays = ["일", "월", "화", "수", "목", "금", "토"]
+  const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
   const goToPreviousMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))
-  }
+    setCurrentMonth(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1)
+    );
+  };
 
   const goToNextMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))
-  }
+    setCurrentMonth(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1)
+    );
+  };
 
   const goToToday = () => {
-    const today = new Date()
-    setCurrentMonth(new Date(today.getFullYear(), today.getMonth(), 1))
-    onDateSelect(today)
-  }
+    const today = new Date();
+    setCurrentMonth(new Date(today.getFullYear(), today.getMonth(), 1));
+    onDateSelect(today);
+  };
 
   const isToday = (date: Date) => {
-    return date.toDateString() === today.toDateString()
-  }
+    return date.toDateString() === today.toDateString();
+  };
 
   const isSelected = (date: Date) => {
-    return date.toDateString() === selectedDate.toDateString()
-  }
+    return date.toDateString() === selectedDate.toDateString();
+  };
 
   const isPastDate = (date: Date) => {
-    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-    const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-    return dateOnly < todayOnly
-  }
+    const dateOnly = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
+    const todayOnly = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+    return dateOnly < todayOnly;
+  };
 
   const getDateStatus = (date: Date): DateStatus => {
-    const todos = getTodosForDate(date)
-    const completed = todos.filter((todo) => todo.completed).length
-    const total = todos.length
+    const todos = getTodosForDate(date);
+    const completed = todos.filter((todo) => todo.completed).length;
+    const total = todos.length;
 
-    const hasOverdue = isPastDate(date) && completed < total && total > 0
+    const hasOverdue = isPastDate(date) && completed < total && total > 0;
 
     return {
       total,
       completed,
       hasOverdue,
       isEmpty: total === 0,
-    }
-  }
+    };
+  };
 
   const getDateStyles = (date: Date, status: DateStatus) => {
-    const isSelectedDate = isSelected(date)
-    const isTodayDate = isToday(date)
+    const isSelectedDate = isSelected(date);
+    const isTodayDate = isToday(date);
 
     if (isSelectedDate) {
-      return "bg-white text-black"
+      return 'bg-white text-black';
     }
 
     if (status.isEmpty) {
       if (isTodayDate) {
-        return "bg-gray-800 text-white hover:bg-gray-700"
+        return 'bg-gray-800 text-white hover:bg-gray-700';
       }
-      return "text-gray-500 hover:text-gray-300 hover:bg-gray-800"
+      return 'text-gray-500 hover:text-gray-300 hover:bg-gray-800';
     }
 
     // 할 일이 있는 경우
     if (status.completed === status.total) {
       // 모든 할 일 완료
-      return "bg-gray-700 text-white hover:bg-gray-600"
+      return 'bg-gray-700 text-white hover:bg-gray-600';
     } else if (status.hasOverdue) {
       // 지연된 할 일
-      return "bg-gray-600 text-red-300 hover:bg-gray-500"
+      return 'bg-gray-600 text-red-300 hover:bg-gray-500';
     } else if (status.completed > 0) {
       // 일부 완료
-      return "bg-gray-700 text-yellow-300 hover:bg-gray-600"
+      return 'bg-gray-700 text-yellow-300 hover:bg-gray-600';
     } else {
       // 미완료
-      return "bg-gray-700 text-blue-300 hover:bg-gray-600"
+      return 'bg-gray-700 text-blue-300 hover:bg-gray-600';
     }
-  }
+  };
 
   const renderCalendarDays = () => {
-    const days = []
+    const days = [];
 
     // 이전 달의 마지막 날들
     for (let i = firstDayOfMonth - 1; i >= 0; i--) {
-      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, lastDayOfPrevMonth - i)
+      const date = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth() - 1,
+        lastDayOfPrevMonth - i
+      );
       days.push(
         <button
           key={`prev-${lastDayOfPrevMonth - i}`}
@@ -122,15 +157,19 @@ export function MinimalCalendar({ selectedDate, onDateSelect, getTodosForDate }:
           onClick={() => onDateSelect(date)}
         >
           {lastDayOfPrevMonth - i}
-        </button>,
-      )
+        </button>
+      );
     }
 
     // 현재 달의 날들
     for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)
-      const status = getDateStatus(date)
-      const styles = getDateStyles(date, status)
+      const date = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth(),
+        day
+      );
+      const status = getDateStatus(date);
+      const styles = getDateStyles(date, status);
 
       days.push(
         <button
@@ -146,14 +185,18 @@ export function MinimalCalendar({ selectedDate, onDateSelect, getTodosForDate }:
               </div>
             )}
           </div>
-        </button>,
-      )
+        </button>
+      );
     }
 
     // 다음 달의 첫 날들
-    const remainingDays = 42 - days.length
+    const remainingDays = 42 - days.length;
     for (let day = 1; day <= remainingDays; day++) {
-      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, day)
+      const date = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth() + 1,
+        day
+      );
       days.push(
         <button
           key={`next-${day}`}
@@ -161,21 +204,21 @@ export function MinimalCalendar({ selectedDate, onDateSelect, getTodosForDate }:
           onClick={() => onDateSelect(date)}
         >
           {day}
-        </button>,
-      )
+        </button>
+      );
     }
 
-    return days
-  }
+    return days;
+  };
 
   return (
     <div className="bg-gray-900 rounded-xl p-3 border border-gray-800">
       {/* 헤더 */}
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-base font-medium text-white">
-          {currentMonth.toLocaleDateString("ko-KR", {
-            year: "numeric",
-            month: "long",
+          {currentMonth.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
           })}
         </h3>
         <div className="flex items-center space-x-1">
@@ -209,7 +252,10 @@ export function MinimalCalendar({ selectedDate, onDateSelect, getTodosForDate }:
       {/* 요일 헤더 */}
       <div className="grid grid-cols-7 gap-1 mb-1">
         {weekDays.map((day) => (
-          <div key={day} className="h-6 flex items-center justify-center text-xs text-gray-500">
+          <div
+            key={day}
+            className="h-6 flex items-center justify-center text-xs text-gray-500"
+          >
             {day}
           </div>
         ))}
@@ -230,5 +276,5 @@ export function MinimalCalendar({ selectedDate, onDateSelect, getTodosForDate }:
         </div>
       </div>
     </div>
-  )
+  );
 }
