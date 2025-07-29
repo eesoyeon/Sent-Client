@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { cn } from '@/lib/utils';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 
 export interface SelectRowProps {
   label: string;
@@ -10,21 +10,14 @@ export interface SelectRowProps {
   onClick?: () => void;
 }
 
-const SelectRow = ({
-  label,
-  value,
-  icon,
-  isOpen = false,
-  className,
-  onClick,
-}: SelectRowProps) => {
-  const isEmptyValue = value === "없음";
+const SelectRow = ({ label, value, icon, isOpen = false, className, onClick }: SelectRowProps) => {
+  const isEmptyValue = value === '없음';
 
   return (
     <div
       className={cn(
-        "flex justify-between items-center px-4 py-3 bg-gray-800 w-full hover:bg-gray-700/60 relative",
-        className
+        'flex justify-between items-center px-4 py-3 bg-gray-800 w-full hover:bg-gray-700/60 relative',
+        className,
       )}
       onClick={onClick}
     >
@@ -32,11 +25,7 @@ const SelectRow = ({
 
       <div className="flex items-center space-x-2">
         {icon && <span>{icon}</span>}
-        <p
-          className={`text-sm font-medium ${
-            isEmptyValue ? "text-gray-500" : "text-gray-100"
-          }`}
-        >
+        <p className={`text-sm font-medium ${isEmptyValue ? 'text-gray-500' : 'text-gray-100'}`}>
           {value}
         </p>
 
