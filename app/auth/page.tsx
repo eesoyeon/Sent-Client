@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { Card, CardContent } from '@/shared/ui/card';
-import { Button } from '@/shared/ui/button';
+import { Card, CardContent } from '@/shared/ui/radix-ui/card';
+import { Button } from '@/shared/ui/radix-ui/button';
 
 export default function AuthPage() {
   const [logoVisible, setLogoVisible] = useState(false);

@@ -1,7 +1,7 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
-import { Button } from '@/shared/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/radix-ui/card';
+import { Button } from '@/shared/ui/radix-ui/button';
 import { Type, Check } from 'lucide-react';
 import { useFontSize, type FontSize, fontSizeLabels } from '@/contexts/font-size-context';
 

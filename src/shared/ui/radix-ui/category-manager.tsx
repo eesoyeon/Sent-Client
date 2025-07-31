@@ -3,10 +3,10 @@
 import type React from 'react';
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
-import { Button } from '@/shared//ui/button';
-import { Input } from '@/shared/ui/input';
-import { Label } from '@/shared/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/radix-ui/card';
+import { Button } from '@/shared/ui/radix-ui/button';
+import { Input } from '@/shared/ui/radix-ui/input';
+import { Label } from '@/shared/ui/radix-ui/label';
 import { X, Plus, Edit3, Trash2, Tag } from 'lucide-react';
 import { getIconComponent, iconOptions } from '@/shared/lib/icons';
 

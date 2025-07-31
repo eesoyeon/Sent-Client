@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/shared/ui/card';
+import { Card, CardContent } from '@/shared/ui/radix-ui/card';
 import CategoryBadge from '@/entities/todos/components/category/CategoryBadge';
 import TodoItem from '@/entities/todos/components/list/TodoItem';
 import { categoryData } from '@/entities/todos/constants/CategoryData';

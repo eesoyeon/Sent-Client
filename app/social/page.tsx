@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent } from '@/shared/ui/card';
-import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
-import { Badge } from '@/shared/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
+import { Card, CardContent } from '@/shared/ui/radix-ui/card';
+import { Button } from '@/shared/ui/radix-ui/button';
+import { Input } from '@/shared/ui/radix-ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/radix-ui/avatar';
+import { Badge } from '@/shared/ui/radix-ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/radix-ui/tabs';
 import { Users, MessageCircle, Search, Plus, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import BottomNavigation from '@/widgets/bottom-navigation/BottomNavigation';

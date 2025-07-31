@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/radix-ui/button';
 import { X } from 'lucide-react';
 
 const DrawerHeader = ({ onClose }: { onClose: () => void }) => (

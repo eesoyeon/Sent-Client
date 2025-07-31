@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/shared/ui/card';
+import { Card, CardContent } from '@/shared/ui/radix-ui/card';
 import SettingHeader from '@/entities/settings/components/Header/SettingHeader';
 import CategorySettingItem from '@/entities/settings/components/Todos/CategorySettingItem';
 import CategoryColorCircle from '@/entities/todos/components/category/CategoryColorCircle';

@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Button } from '@/shared/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
-import { Badge } from '@/shared/ui/badge';
+import { Button } from '@/shared/ui/radix-ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/radix-ui/avatar';
+import { Badge } from '@/shared/ui/radix-ui/badge';
 import { Settings, LogOut, Type, Bell, HelpCircle, ChevronRight, Edit } from 'lucide-react';
-import { FontSizeSelector } from '@/shared/ui/font-size-selector';
+import { FontSizeSelector } from '@/shared/ui/radix-ui/font-size-selector';
 
 interface UserProfile {
   displayName: string;

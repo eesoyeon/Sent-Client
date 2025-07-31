@@ -1,6 +1,6 @@
 import DeleteButton from '@/widgets/button/DeleteButton';
-import { Button } from '@/shared/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
+import { Button } from '@/shared/ui/radix-ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/radix-ui/card';
 import TodoForm from '@/entities/todos/components/form/TodoForm';
 import DatePicker from '@/entities/todos/components/select/DatePicker';
 import { Category, Todo } from '@/entities/todos/types/TodoTypes';

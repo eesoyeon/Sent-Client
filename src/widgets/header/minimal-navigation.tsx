@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Menu, X, Home, CheckSquare, StickyNote, User, Users } from 'lucide-react';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/radix-ui/button';
 
 interface MinimalNavigationProps {
   title: string;

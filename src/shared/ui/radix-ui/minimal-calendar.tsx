@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/radix-ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { CreatedTodo } from '@/entities/todos/types/TodoTypes';
 

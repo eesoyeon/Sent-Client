@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/radix-ui/button';
 import { CreatedTodo } from '@/entities/todos/types/TodoTypes';
 import { ChevronLeft, ChevronRight, Circle } from 'lucide-react';
 import { useState } from 'react';

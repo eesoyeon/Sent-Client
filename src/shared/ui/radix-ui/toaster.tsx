@@ -8,7 +8,7 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from '@/shared/ui/toast';
+} from '@/shared/ui/radix-ui/toast';
 
 export function Toaster() {
   const { toasts } = useToast();

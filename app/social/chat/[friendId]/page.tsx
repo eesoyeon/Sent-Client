@@ -3,9 +3,9 @@
 import type React from 'react';
 
 import { useState, useRef, useEffect } from 'react';
-import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
+import { Button } from '@/shared/ui/radix-ui/button';
+import { Input } from '@/shared/ui/radix-ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/radix-ui/avatar';
 import { ArrowLeft, Send, MoreVertical, Paperclip } from 'lucide-react';
 import Link from 'next/link';
 

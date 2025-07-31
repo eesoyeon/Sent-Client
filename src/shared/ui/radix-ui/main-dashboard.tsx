@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
-import { Button } from '@/shared/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/radix-ui/card';
+import { Button } from '@/shared/ui/radix-ui/button';
 import { CheckCircle2, Circle, Plus, StickyNote, Calendar, ArrowRight } from 'lucide-react';
 import { MinimalNavigation } from '@/widgets/header/minimal-navigation';
 import { getIconComponent } from '@/shared/lib/icons';

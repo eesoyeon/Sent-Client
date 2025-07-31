@@ -1,6 +1,6 @@
 import SelectGroup from '@/entities/todos/components/select/SelectGroup';
-import { Input } from '@/shared/ui/input';
-import { Label } from '@/shared/ui/label';
+import { Input } from '@/shared/ui/radix-ui/input';
+import { Label } from '@/shared/ui/radix-ui/label';
 import { categoryData } from '@/entities/todos/constants/CategoryData';
 import { alarmOptions, timeOptions } from '@/entities/todos/constants/TodoOptionData';
 import { Todo } from '@/entities/todos/types/TodoTypes';
