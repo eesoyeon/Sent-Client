@@ -1,6 +1,6 @@
 'use client';
 
-import TodosPage from '@/app/todos/page';
+import TodosPage from 'app/todos/page';
 import { useState, useEffect } from 'react';
 
 export default function HomePage() {

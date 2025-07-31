@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { CheckCircle2, Plus, TrendingUp } from 'lucide-react';
-import BottomNavigation from '@/components/BottomNavigation/BottomNavigation';
-import HeaderNavigation from '@/components/HeaderNavigation/HeaderNavigation';
-import { Category, CreatedTodo, Todo } from '@/features/todos/types/TodoTypes';
-import TodoCreateModal from '@/features/todos/components/Modal/TodoCreateModal';
-import { todoListData } from '@/features/todos/constants/TodoListData';
-import { categoryData } from '@/features/todos/constants/CategoryData';
-import CustomCalendar from '@/features/todos/components/Calendar/CustomCalendar';
-import GroupedTodoLists from '@/features/todos/components/Todolist/GroupedTodoLists';
+import BottomNavigation from '@/widgets/bottom-navigation/BottomNavigation';
+import HeaderNavigation from '@/widgets/header/HeaderNavigation';
+import { Category, CreatedTodo, Todo } from '@/entities/todos/types/TodoTypes';
+import TodoCreateModal from '@/entities/todos/components/modal/TodoCreateModal';
+import { todoListData } from '@/entities/todos/constants/TodoListData';
+import { categoryData } from '@/entities/todos/constants/CategoryData';
+import CustomCalendar from '@/entities/todos/components/calendar/CustomCalendar';
+import GroupedTodoLists from '@/entities/todos/components/list/GroupedTodoLists';
 
 const TodosPage = () => {
   const [isVisible, setIsVisible] = useState(false);

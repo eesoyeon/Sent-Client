@@ -1,16 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent } from '@/shared/ui/card';
+import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
+import { Badge } from '@/shared/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { Users, MessageCircle, Search, Plus, UserPlus } from 'lucide-react';
 import Link from 'next/link';
-import BottomNavigation from '@/components/BottomNavigation/BottomNavigation';
-import HeaderNavigation from '@/components/HeaderNavigation/HeaderNavigation';
+import BottomNavigation from '@/widgets/bottom-navigation/BottomNavigation';
+import HeaderNavigation from '@/widgets/header/HeaderNavigation';
 
 interface Friend {
   id: string;

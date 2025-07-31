@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/ /shared/components/ui/card';
+import { Button } from '@/ ared/components/ui/button';
+import { Input } from '@/ ared/components/ui/input';
+import { Textarea } from '@/ ared/components/ui/textarea';
 import { Plus, Search, Edit3, Trash2 } from 'lucide-react';
-import BottomNavigation from '@/components/BottomNavigation/BottomNavigation';
-import HeaderNavigation from '@/components/HeaderNavigation/HeaderNavigation';
+import BottomNavigation from '@/ ared/components/BottomNavigation/BottomNavigation';
+import HeaderNavigation from '@/ ared/components/HeaderNavigation/HeaderNavigation';
 
 interface Memo {
   id: string;

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { MessageCircle } from 'lucide-react';
+import { Card, CardContent } from '@/shared/ui/card';
+import { Button } from '@/shared/ui/button';
 
 export default function AuthPage() {
   const [logoVisible, setLogoVisible] = useState(false);
@@ -35,12 +35,10 @@ export default function AuthPage() {
   const handleLogin = (provider: string) => {
     const loginUrl = `${
       process.env.NEXT_PUBLIC_API_BASE_URL
-    }/oauth2/authorization/${provider.toLowerCase()}?state=${
-      process.env.NEXT_PUBLIC_REDIRECT_URI
-    }`;
+    }/oauth2/authorization/${provider.toLowerCase()}?state=${process.env.NEXT_PUBLIC_REDIRECT_URI}`;
 
     // 부드러운 페이지 전환 애니메이션
-    document.body.classList.add("page-exit");
+    document.body.classList.add('page-exit');
     setTimeout(() => {
       window.location.href = loginUrl;
     }, 300);
@@ -54,8 +52,8 @@ export default function AuthPage() {
           <div
             className={`relative mx-auto w-24 h-24 mb-8 transition-all duration-1000 ease-out ${
               logoVisible
-                ? "opacity-100 scale-100 translate-y-0 rotate-0"
-                : "opacity-0 scale-50 translate-y-12 rotate-12"
+                ? 'opacity-100 scale-100 translate-y-0 rotate-0'
+                : 'opacity-0 scale-50 translate-y-12 rotate-12'
             }`}
           >
             <div className="absolute inset-0 bg-white rounded-3xl flex items-center justify-center shadow-2xl">
@@ -64,15 +62,15 @@ export default function AuthPage() {
                   <div
                     className="w-2 h-2 bg-black rounded-full transition-all duration-500"
                     style={{
-                      animationDelay: logoVisible ? "0ms" : "0ms",
-                      transform: logoVisible ? "scale(1)" : "scale(0)",
+                      animationDelay: logoVisible ? '0ms' : '0ms',
+                      transform: logoVisible ? 'scale(1)' : 'scale(0)',
                     }}
                   ></div>
                   <div
                     className="w-2 h-2 bg-black rounded-full transition-all duration-500"
                     style={{
-                      animationDelay: logoVisible ? "200ms" : "0ms",
-                      transform: logoVisible ? "scale(1)" : "scale(0)",
+                      animationDelay: logoVisible ? '200ms' : '0ms',
+                      transform: logoVisible ? 'scale(1)' : 'scale(0)',
                     }}
                   ></div>
                 </div>
@@ -80,15 +78,15 @@ export default function AuthPage() {
                   <div
                     className="w-2 h-2 bg-black rounded-full transition-all duration-500"
                     style={{
-                      animationDelay: logoVisible ? "400ms" : "0ms",
-                      transform: logoVisible ? "scale(1)" : "scale(0)",
+                      animationDelay: logoVisible ? '400ms' : '0ms',
+                      transform: logoVisible ? 'scale(1)' : 'scale(0)',
                     }}
                   ></div>
                   <div
                     className="w-2 h-2 bg-black/40 rounded-full transition-all duration-500"
                     style={{
-                      animationDelay: logoVisible ? "600ms" : "0ms",
-                      transform: logoVisible ? "scale(1)" : "scale(0)",
+                      animationDelay: logoVisible ? '600ms' : '0ms',
+                      transform: logoVisible ? 'scale(1)' : 'scale(0)',
                     }}
                   ></div>
                 </div>
@@ -98,9 +96,7 @@ export default function AuthPage() {
 
           <h1
             className={`text-4xl font-bold mb-3 tracking-tight text-white transition-all duration-800 ease-out ${
-              titleVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
+              titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
             Life Tracker
@@ -108,9 +104,7 @@ export default function AuthPage() {
 
           <p
             className={`text-lg text-gray-300 transition-all duration-800 ease-out ${
-              subtitleVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
+              subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
             일상을 체계적으로 관리하세요
@@ -121,61 +115,51 @@ export default function AuthPage() {
         <div
           className={`transition-all duration-1000 ease-out ${
             cardVisible
-              ? "opacity-100 translate-y-0 scale-100"
-              : "opacity-0 translate-y-12 scale-95"
+              ? 'opacity-100 translate-y-0 scale-100'
+              : 'opacity-0 translate-y-12 scale-95'
           }`}
         >
           <Card className="border-gray-800 shadow-2xl bg-gray-900/90 backdrop-blur-sm">
             <CardContent className="p-8">
               <div className="space-y-4">
-                <p className="text-center text-gray-300 mb-8">
-                  소셜 계정으로 간편하게 시작하세요
-                </p>
+                <p className="text-center text-gray-300 mb-8">소셜 계정으로 간편하게 시작하세요</p>
 
                 {/* 버튼들 - 순차적 등장 */}
                 <div className="space-y-4">
                   <Button
-                    onClick={() => handleLogin("Google")}
+                    onClick={() => handleLogin('Google')}
                     variant="outline"
                     className={`w-full h-12 border-gray-700 text-white hover:bg-gray-800 hover:border-gray-600 bg-gray-800/50 transition-all duration-500 ${
-                      buttonsVisible
-                        ? "opacity-100 translate-x-0"
-                        : "opacity-0 -translate-x-8"
+                      buttonsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
                     }`}
-                    style={{ transitionDelay: buttonsVisible ? "0ms" : "0ms" }}
+                    style={{ transitionDelay: buttonsVisible ? '0ms' : '0ms' }}
                   >
                     <span className="text-lg mr-3">🇬</span>
                     <span>Google로 계속하기</span>
                   </Button>
 
                   <Button
-                    onClick={() => handleLogin("Naver")}
+                    onClick={() => handleLogin('Naver')}
                     className={`w-full h-12 bg-[#03C75A] hover:bg-[#02B351] text-white transition-all duration-500 ${
-                      buttonsVisible
-                        ? "opacity-100 translate-x-0"
-                        : "opacity-0 -translate-x-8"
+                      buttonsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
                     }`}
                     style={{
-                      transitionDelay: buttonsVisible ? "200ms" : "0ms",
+                      transitionDelay: buttonsVisible ? '200ms' : '0ms',
                     }}
                   >
                     <div className="w-5 h-5 mr-3 bg-white rounded-sm flex items-center justify-center">
-                      <span className="text-[#03C75A] font-bold text-xs">
-                        N
-                      </span>
+                      <span className="text-[#03C75A] font-bold text-xs">N</span>
                     </div>
                     <span>네이버로 계속하기</span>
                   </Button>
 
                   <Button
-                    onClick={() => handleLogin("Kakao")}
+                    onClick={() => handleLogin('Kakao')}
                     className={`w-full h-12 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] transition-all duration-500 ${
-                      buttonsVisible
-                        ? "opacity-100 translate-x-0"
-                        : "opacity-0 -translate-x-8"
+                      buttonsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
                     }`}
                     style={{
-                      transitionDelay: buttonsVisible ? "400ms" : "0ms",
+                      transitionDelay: buttonsVisible ? '400ms' : '0ms',
                     }}
                   >
                     <MessageCircle className="h-5 w-5 mr-3" />
@@ -187,17 +171,15 @@ export default function AuthPage() {
               <div className="mt-8 pt-6 border-t border-gray-700">
                 <p
                   className={`text-center text-sm text-gray-400 leading-relaxed transition-all duration-800 ${
-                    buttonsVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-4"
+                    buttonsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   }`}
-                  style={{ transitionDelay: buttonsVisible ? "600ms" : "0ms" }}
+                  style={{ transitionDelay: buttonsVisible ? '600ms' : '0ms' }}
                 >
-                  계속 진행하면{" "}
+                  계속 진행하면{' '}
                   <button className="text-gray-300 hover:text-white transition-colors">
                     서비스 약관
                   </button>
-                  과{" "}
+                  과{' '}
                   <button className="text-gray-300 hover:text-white transition-colors">
                     개인정보 처리방침
                   </button>
@@ -211,14 +193,10 @@ export default function AuthPage() {
         {/* 하단 장식 */}
         <div
           className={`mt-8 text-center transition-all duration-800 ${
-            footerVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-4"
+            footerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          <p className="text-sm text-gray-500">
-            © 2024 Life Tracker. All rights reserved.
-          </p>
+          <p className="text-sm text-gray-500">© 2024 Life Tracker. All rights reserved.</p>
         </div>
       </div>
     </div>
