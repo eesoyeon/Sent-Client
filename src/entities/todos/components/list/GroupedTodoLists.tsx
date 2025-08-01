@@ -1,16 +1,16 @@
 import CategoryTodoListCard from '@/entities/todos/components/list/CategoryTodoListCard';
 import { categoryData } from '@/entities/todos/constants/CategoryData';
-import { CreatedTodo } from '@/entities/todos/types/TodoTypes';
+import { Todo } from '@/entities/todos/types/TodoTypes';
 
 interface GroupedTodoListsProps {
-  todos: CreatedTodo[];
-  handleToggle: (id: string) => void;
-  lastAddedTodoId?: string | null;
+  todos: Todo[];
+  handleToggle: (id: number) => void;
+  lastAddedTodoId?: number | null;
 }
 
 const GroupedTodoLists = ({ todos, handleToggle, lastAddedTodoId }: GroupedTodoListsProps) => {
   const todosByCategory = categoryData.map(category => {
-    const filteredTodos = todos.filter(todo => todo.categoryId === category.id);
+    const filteredTodos = todos.filter(todo => todo.category.id === category.id);
 
     return {
       category,

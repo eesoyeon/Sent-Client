@@ -2,7 +2,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { getIconComponent } from '@/shared/lib/icons';
 import { getSelectItemStyle } from '@/entities/todos/utils/getFormItemStyle';
-import { Category } from '@/entities/todos/types/TodoTypes';
+import { Category } from '@/entities/todos/types/CategoryTypes';
 
 interface CategorySettingItemProps {
   category: Category;

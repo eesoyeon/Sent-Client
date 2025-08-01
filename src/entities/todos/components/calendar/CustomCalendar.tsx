@@ -1,12 +1,12 @@
 import { Button } from '@/shared/ui/radix-ui/button';
-import { CreatedTodo } from '@/entities/todos/types/TodoTypes';
+import { Todo } from '@/entities/todos/types/TodoTypes';
 import { ChevronLeft, ChevronRight, Circle } from 'lucide-react';
 import { useState } from 'react';
 
 interface MinimalCalendarProps {
   selectedDate: Date;
   onDateSelect: (date: Date) => void;
-  getTodosForDate: (date: Date) => CreatedTodo[];
+  getTodosForDate: (date: Date) => Todo[];
 }
 
 interface DateStatus {
@@ -66,7 +66,7 @@ const CustomCalendar = ({ selectedDate, onDateSelect, getTodosForDate }: Minimal
 
   const getDateStatus = (date: Date): DateStatus => {
     const todos = getTodosForDate(date);
-    const completed = todos.filter(todo => todo.completed).length;
+    const completed = todos.filter(todo => todo.isDone).length;
     const total = todos.length;
 
     const hasOverdue = isPastDate(date) && completed < total && total > 0;

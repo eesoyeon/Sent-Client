@@ -3,17 +3,17 @@ import { Input } from '@/shared/ui/radix-ui/input';
 import { Label } from '@/shared/ui/radix-ui/label';
 import { categoryData } from '@/entities/todos/constants/CategoryData';
 import { alarmOptions, timeOptions } from '@/entities/todos/constants/TodoOptionData';
-import { Todo } from '@/entities/todos/types/TodoTypes';
+import { CreateTodoRequest } from '@/entities/todos/types/TodoTypes';
 
 interface TodoFormProps {
-  formTodo: Todo;
-  handleChange: (field: keyof Todo, value: string) => void;
+  formTodo: CreateTodoRequest;
+  handleChange: (field: keyof CreateTodoRequest, value: string | number) => void;
   openSelectId: number | null;
   handleToggle: (id: number | null) => void;
 }
 
 const TodoForm = ({ formTodo, handleChange, openSelectId, handleToggle }: TodoFormProps) => {
-  const selectedCategory = categoryData.find(category => category.id === formTodo.categoryId);
+  const selectedCategory = categoryData.find(category => category.name === formTodo.category);
 
   return (
     <>
@@ -45,7 +45,7 @@ const TodoForm = ({ formTodo, handleChange, openSelectId, handleToggle }: TodoFo
                   value: category.id,
                   icon: category.colorCircle,
                 })),
-                onSelect: value => handleChange('categoryId', value),
+                onSelect: value => handleChange('category', value),
                 icon: selectedCategory?.colorCircle ?? categoryData[0].colorCircle,
               },
             ]}
@@ -60,22 +60,24 @@ const TodoForm = ({ formTodo, handleChange, openSelectId, handleToggle }: TodoFo
               {
                 id: 1,
                 label: '시간 선택',
-                value: timeOptions.find(opt => opt.value === formTodo.dueTime)?.label || '없음',
+                value:
+                  timeOptions.find(opt => opt.value === formTodo.notificationTime)?.label || '없음',
                 dropdownOptions: timeOptions.map(time => ({
                   label: time.label,
                   value: time.value,
                 })),
-                onSelect: value => handleChange('dueTime', value),
+                onSelect: value => handleChange('notificationTime', value),
               },
               {
                 id: 2,
                 label: '알림',
-                value: alarmOptions.find(opt => opt.value === formTodo.alarm)?.label || '없음',
+                value:
+                  alarmOptions.find(opt => opt.value === formTodo.scheduledTime)?.label || '없음',
                 dropdownOptions: alarmOptions.map(alarm => ({
                   label: alarm.label,
                   value: alarm.value,
                 })),
-                onSelect: value => handleChange('alarm', value),
+                onSelect: value => handleChange('scheduledTime', value),
               },
             ]}
             openSelectId={openSelectId}

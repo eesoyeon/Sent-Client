@@ -1,11 +1,11 @@
 import { cn } from '@/shared/lib/utils';
 
 interface SelectDropdownItemProps {
-  label: string;
-  value: string;
+  label: string | number;
+  value: string | number;
   icon?: React.ReactNode;
   className?: string;
-  onSelect: (label: string) => void;
+  onSelect: (label: string | number) => void;
 }
 
 const SelectDropdownItem = ({

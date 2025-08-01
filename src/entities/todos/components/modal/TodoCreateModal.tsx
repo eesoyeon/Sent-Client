@@ -1,18 +1,18 @@
-import DeleteButton from '@/widgets/button/DeleteButton';
 import { Button } from '@/shared/ui/radix-ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/radix-ui/card';
 import TodoForm from '@/entities/todos/components/form/TodoForm';
 import DatePicker from '@/entities/todos/components/select/DatePicker';
-import { Category, Todo } from '@/entities/todos/types/TodoTypes';
+import { CreateTodoRequest } from '@/entities/todos/types/TodoTypes';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft } from 'lucide-react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { Category } from '@/entities/todos/types/CategoryTypes';
 
 interface TodoCreateModalProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  onSubmit: (todo: Todo) => void;
+  onSubmit: (todo: CreateTodoRequest) => void;
   categories: Category[];
   initialTodoDate: Date;
 }
@@ -26,13 +26,12 @@ const TodoCreateModal = ({
 }: TodoCreateModalProps) => {
   const selectedDateString = initialTodoDate.toLocaleDateString('sv-SE'); // "2025-07-28"
 
-  const [formTodo, setFormTodo] = useState<Todo>({
+  const [formTodo, setFormTodo] = useState<CreateTodoRequest>({
     title: '',
-    scheduleDate: selectedDateString,
-    completed: false,
-    categoryId: categories[0]?.id,
-    dueTime: '',
-    alarm: '',
+    scheduledDate: selectedDateString,
+    category: categories[0].name,
+    scheduledTime: '',
+    notificationTime: '',
   });
   const [openSelectId, setOpenSelectId] = useState<number | null>(null);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
@@ -46,7 +45,7 @@ const TodoCreateModal = ({
     });
   };
 
-  const handleChange = (field: keyof Todo, value: string) => {
+  const handleChange = (field: keyof CreateTodoRequest, value: string | number) => {
     setFormTodo(prev => ({ ...prev, [field]: value }));
   };
 
@@ -55,11 +54,10 @@ const TodoCreateModal = ({
     setOpenSelectId(null);
     setFormTodo({
       title: '',
-      scheduleDate: '',
-      completed: false,
-      categoryId: categories[0]?.id || '',
-      dueTime: '',
-      alarm: '',
+      scheduledDate: selectedDateString,
+      category: categories[0].name,
+      scheduledTime: '',
+      notificationTime: '',
     });
   };
 

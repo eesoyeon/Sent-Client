@@ -1,19 +1,21 @@
-import { CreatedTodo } from '@/entities/todos/types/TodoTypes';
+import { Todo } from '@/entities/todos/types/TodoTypes';
 import { Circle, Ellipsis } from 'lucide-react';
 import React, { useState } from 'react';
 
 interface TodoItemProps {
-  todo: CreatedTodo;
-  handleToggle: (id: string) => void;
+  todo: Todo;
+  handleToggle: (id: number) => void;
 }
 
 const TodoItem = ({ todo, handleToggle }: TodoItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={`px-1 py-2 space-x-3 flex ${todo.dueTime ? 'items-start' : 'items-center'}`}>
+    <div
+      className={`px-1 py-2 space-x-3 flex ${todo.notificationTime ? 'items-start' : 'items-center'}`}
+    >
       <button onClick={() => handleToggle(todo.id)}>
-        {todo.completed ? (
+        {todo.isDone ? (
           <Circle className="w-6 h-6 rounded-full bg-gray-400 text-gray-400" />
         ) : (
           <Circle className="w-6 h-6 text-gray-400" />
@@ -22,14 +24,14 @@ const TodoItem = ({ todo, handleToggle }: TodoItemProps) => {
       <div className="w-full text-left">
         <p
           className={`text-sm ${
-            todo.completed ? 'line-through text-destructive font-medium' : 'text-white'
+            todo.isDone ? 'line-through text-destructive font-medium' : 'text-white'
           }`}
         >
           {todo.title}
         </p>
-        {todo.dueTime && (
-          <p className={`text-xs ${todo.completed ? 'text-destructive' : ' text-gray-400'}`}>
-            {todo.dueTime}
+        {todo.notificationTime && (
+          <p className={`text-xs ${todo.isDone ? 'text-destructive' : ' text-gray-400'}`}>
+            {todo.notificationTime}
           </p>
         )}
       </div>

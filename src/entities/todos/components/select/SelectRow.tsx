@@ -3,7 +3,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 
 export interface SelectRowProps {
   label: string;
-  value: string | number;
+  value: string | number | null;
   icon?: React.ReactNode;
   isOpen?: boolean;
   className?: string;

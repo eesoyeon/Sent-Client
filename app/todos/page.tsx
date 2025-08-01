@@ -4,23 +4,32 @@ import { useState, useEffect } from 'react';
 import { CheckCircle2, Plus, TrendingUp } from 'lucide-react';
 import BottomNavigation from '@/widgets/bottom-navigation/BottomNavigation';
 import HeaderNavigation from '@/widgets/header/HeaderNavigation';
-import { Category, CreatedTodo, Todo } from '@/entities/todos/types/TodoTypes';
+import { CreateTodoRequest } from '@/entities/todos/types/TodoTypes';
 import TodoCreateModal from '@/entities/todos/components/modal/TodoCreateModal';
 import { todoListData } from '@/entities/todos/constants/TodoListData';
 import { categoryData } from '@/entities/todos/constants/CategoryData';
 import CustomCalendar from '@/entities/todos/components/calendar/CustomCalendar';
 import GroupedTodoLists from '@/entities/todos/components/list/GroupedTodoLists';
+import { useCreateTodo, useGetTodosByMonth, useUpdateTodo } from '@/entities/todos/hooks/useTodos';
+import { Category } from '@/entities/todos/types/CategoryTypes';
 
 const TodosPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [categories, setCategories] = useState<Category[]>(categoryData);
-  const [todos, setTodos] = useState<CreatedTodo[]>(todoListData);
-  const [lastAddedTodoId, setLastAddedTodoId] = useState<string | null>(null);
+  // const [todos, setTodos] = useState<Todo[]>(todoListData);
+  const [lastAddedTodoId, setLastAddedTodoId] = useState<number | null>(null);
+
+  const year = selectedDate.getFullYear();
+  const month = selectedDate.getMonth() + 1;
+
+  const { data: todos = [], isLoading } = useGetTodosByMonth(year, month);
+  const { mutate: createTodo } = useCreateTodo();
+  const { mutate: updateTodo } = useUpdateTodo();
 
   const selectedDateString = selectedDate.toLocaleDateString('sv-SE'); // "2025-07-28"
-  const todosForSelectedDate = todos.filter(todo => todo.scheduleDate === selectedDateString);
+  const todosForSelectedDate = todos.filter(todo => todo.scheduledDate === selectedDateString);
 
   useEffect(() => {
     // 페이지 진입 애니메이션
@@ -35,20 +44,40 @@ const TodosPage = () => {
     };
   }, []);
 
-  const toggleTodo = (id: string) => {
-    setTodos(todos.map(todo => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)));
+  const toggleTodo = (id: number) => {
+    const current = todos.find(todo => todo.id === id);
+    if (!current) return;
+
+    updateTodo({ ...current, isDone: !current.isDone });
+    // setTodos(todos.map(todo => (todo.id === id ? { ...todo, completed: !todo.isDone } : todo)));
   };
 
-  const addTodo = (todoData: Todo) => {
-    const newId = Date.now().toString();
-
-    const newTodo: CreatedTodo = {
-      ...todoData,
-      id: newId,
-      createdAt: new Date().toISOString().split('T')[0],
-      scheduleDate: todoData.scheduleDate || selectedDateString,
+  const cleanTodoData = (todoData: CreateTodoRequest): CreateTodoRequest => {
+    return {
+      title: todoData.title,
+      category: todoData.category,
+      scheduledDate: todoData.scheduledDate,
+      scheduledTime: todoData.scheduledTime ? `${todoData.scheduledTime}:00` : null,
+      notificationTime: todoData.notificationTime
+        ? `${todoData.scheduledDate}T${todoData.notificationTime.length === 5 ? `${todoData.notificationTime}:00` : todoData.notificationTime}`
+        : null,
     };
-    setTodos(prevTodos => [newTodo, ...prevTodos]);
+  };
+
+  const addTodo = (todoData: CreateTodoRequest) => {
+    const newId = Date.now();
+
+    // const newTodo: Todo = {
+    //   ...todoData,
+    //   id: newId,
+    //   createdAt: new Date().toISOString().split('T')[0],
+    //   scheduledDate: todoData.scheduledDate || selectedDateString,
+    // };
+    // setTodos(prevTodos => [newTodo, ...prevTodos]);
+
+    console.log(cleanTodoData(todoData));
+    createTodo(cleanTodoData(todoData));
+    setShowCreateModal(false);
     setLastAddedTodoId(newId);
   };
 
@@ -110,10 +139,10 @@ const TodosPage = () => {
 
   const getTodosForDate = (date: Date) => {
     const dateString = date.toLocaleDateString('sv-SE');
-    return todos.filter(todo => todo.scheduleDate === dateString);
+    return todos.filter(todo => todo.scheduledDate === dateString);
   };
 
-  const activeTodosForDateCount = todosForSelectedDate.filter(todo => !todo.completed).length;
+  const activeTodosForDateCount = todosForSelectedDate.filter(todo => !todo.isDone).length;
   // const completedTodosForDate = todosForSelectedDate.filter(todo => todo.completed).length;
   const totalTodosForDateCount = todosForSelectedDate.length;
 
@@ -138,7 +167,6 @@ const TodosPage = () => {
       <main className="px-4 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden h-[100dvh] pb-24">
         <HeaderNavigation currentPage="todos" />
 
-        {/* 달력 - 애니메이션 적용 */}
         <div className={`slide-up mb-4 ${isVisible ? '' : 'opacity-0'}`}>
           <CustomCalendar
             selectedDate={selectedDate}

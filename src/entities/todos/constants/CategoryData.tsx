@@ -1,48 +1,50 @@
 import CategoryColorCircle from '@/entities/todos/components/category/CategoryColorCircle';
-import { Category } from '@/entities/todos/types/TodoTypes';
+import { Category } from '@/entities/todos/types/CategoryTypes';
+
+const size = 'w-2 h-2';
 
 export const categoryData: Category[] = [
   {
-    id: 'work',
+    id: 1,
     name: 'Work',
     color: '#60a5fa',
     icon: 'briefcase',
-    colorCircle: <CategoryColorCircle color="#60a5fa" />,
+    colorCircle: <CategoryColorCircle size={size} color="#60a5fa" />,
   },
   {
-    id: 'personal',
+    id: 2,
     name: 'Personal',
     color: '#4ade80',
     icon: 'home',
-    colorCircle: <CategoryColorCircle color="#4ade80" />,
+    colorCircle: <CategoryColorCircle size={size} color="#4ade80" />,
   },
   {
-    id: 'health',
+    id: 3,
     name: 'Health',
     color: '#f87171',
     icon: 'heart',
-    colorCircle: <CategoryColorCircle color="#f87171" />,
+    colorCircle: <CategoryColorCircle size={size} color="#f87171" />,
   },
   {
-    id: 'learning',
+    id: 3,
     name: 'Learning',
     color: '#c084fc',
     icon: 'book-open',
-    colorCircle: <CategoryColorCircle color="#c084fc" />,
+    colorCircle: <CategoryColorCircle size={size} color="#c084fc" />,
   },
   {
-    id: 'daily',
+    id: 4,
     name: 'Daily',
     color: '#facc15',
     icon: 'star',
-    colorCircle: <CategoryColorCircle color="#facc15" />,
+    colorCircle: <CategoryColorCircle size={size} color="#facc15" />,
   },
   {
-    id: 'hobby',
+    id: 5,
     name: 'Hobby',
     color: '#f472b6',
     icon: 'camera',
-    colorCircle: <CategoryColorCircle color="#f472b6" />,
+    colorCircle: <CategoryColorCircle size={size} color="#f472b6" />,
   },
 ];
 

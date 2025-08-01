@@ -7,14 +7,14 @@ import { useRef } from 'react';
 export interface SelectOption {
   id: number;
   label: string;
-  value: string | number;
+  value: string | number | null;
   icon?: React.ReactNode;
   dropdownOptions: {
-    label: string;
-    value: string | null;
+    label: string | number;
+    value: string | number | null;
     icon?: React.ReactNode;
   }[];
-  onSelect?: (value: string) => void;
+  onSelect?: (value: string | number) => void;
 }
 
 interface SelectGroupProps {

@@ -2,13 +2,13 @@ import { Card, CardContent } from '@/shared/ui/radix-ui/card';
 import CategoryBadge from '@/entities/todos/components/category/CategoryBadge';
 import TodoItem from '@/entities/todos/components/list/TodoItem';
 import { categoryData } from '@/entities/todos/constants/CategoryData';
-import { CreatedTodo } from '@/entities/todos/types/TodoTypes';
+import { Todo } from '@/entities/todos/types/TodoTypes';
 import { motion } from 'framer-motion';
 
 interface CategoryTodoListCardProps {
-  todoList: CreatedTodo[];
-  handleToggle: (id: string) => void;
-  lastAddedTodoId?: string | null;
+  todoList: Todo[];
+  handleToggle: (id: number) => void;
+  lastAddedTodoId?: number | null;
 }
 
 const CategoryTodoListCard = ({
@@ -16,7 +16,7 @@ const CategoryTodoListCard = ({
   handleToggle,
   lastAddedTodoId,
 }: CategoryTodoListCardProps) => {
-  const categoryId = todoList[0]?.categoryId;
+  const categoryId = todoList[0]?.category.id;
   const category = categoryData.find(category => category.id === categoryId);
 
   // const sortedTodosByCompleted = [...todoList].sort(
