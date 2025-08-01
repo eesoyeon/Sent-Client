@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import { FontSizeProvider } from '@/contexts/font-size-context';
+import Providers from 'app/providers';
+import AuthProvider from '@/shared/providers/AuthProvider';
 
 const pretendard = localFont({
   src: '../src/shared/fonts/pretendard/PretendardVariable.woff2',
@@ -18,9 +20,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <body className={pretendard.className}>
-        <FontSizeProvider>{children}</FontSizeProvider>
+        <Providers>
+          <AuthProvider>
+            <FontSizeProvider>{children}</FontSizeProvider>
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

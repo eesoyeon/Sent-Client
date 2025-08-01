@@ -12,7 +12,7 @@ export default function OAuthCallback() {
 
     if (accessToken) {
       localStorage.setItem('access_token', accessToken);
-      router.push('/');
+      router.push('/todos');
     } else {
       console.error('accessToken not found in query params');
       router.push('/auth');
