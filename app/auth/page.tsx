@@ -99,7 +99,7 @@ export default function AuthPage() {
               titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Life Tracker
+            SENT
           </h1>
 
           <p
