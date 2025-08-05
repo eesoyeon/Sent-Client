@@ -3,6 +3,7 @@ import {
   deleteTodo,
   getTodo,
   getTodosByMonth,
+  markDoneTodo,
   updateTodo,
 } from '@/entities/todos/api/todosApi';
 import { CreateTodoRequest, Todo } from '@/entities/todos/types/TodoTypes';
@@ -49,6 +50,17 @@ export const useDeleteTodo = () => {
 
   return useMutation({
     mutationFn: (id: number) => deleteTodo(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+    },
+  });
+};
+
+export const useMarkDoneTodo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: { id: number; isDone: boolean }) => markDoneTodo(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
     },

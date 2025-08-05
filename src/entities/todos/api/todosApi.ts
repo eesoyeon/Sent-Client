@@ -24,3 +24,14 @@ export const updateTodo = async (data: Todo): Promise<Todo> => {
 export const deleteTodo = async (id: number): Promise<void> => {
   await axiosInstance.delete(`/api/v1/todos/${id}`);
 };
+
+export const markDoneTodo = async ({
+  id,
+  isDone,
+}: {
+  id: number;
+  isDone: boolean;
+}): Promise<void> => {
+  const res = await axiosInstance.patch(`/api/v1/todos/${id}/done?done=${isDone}`, { isDone });
+  return res.data;
+};
