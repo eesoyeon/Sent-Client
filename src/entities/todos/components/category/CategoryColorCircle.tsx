@@ -1,9 +1,10 @@
 interface CategoryColorCircleProps {
+  size: string;
   color: string;
 }
 
-const CategoryColorCircle = ({ color }: CategoryColorCircleProps) => {
-  return <div className={`w-2 h-2 rounded-full`} style={{ backgroundColor: color }} />;
+const CategoryColorCircle = ({ size, color }: CategoryColorCircleProps) => {
+  return <div className={`rounded-full ${size}`} style={{ backgroundColor: color }} />;
 };
 
 export default CategoryColorCircle;
