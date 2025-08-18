@@ -4,6 +4,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/ui/radix-ui/dropdown-menu';
 import { alarmOptions } from '@/entities/todos/constants/AlarmOptionData';
@@ -96,9 +97,10 @@ const TodoItem = ({ todo, handleToggle, onEdit, onDelete }: TodoItemProps) => {
         <DropdownMenuContent
           sideOffset={0}
           align="end"
-          className=" bg-gray-900 border-none text-gray-300 font-medium px-3 py-2 space-y-0 shadow-md"
+          className=" bg-gray-900 border text-gray-300 font-medium px-3 py-2 space-y-1 shadow-md"
         >
           <DropdownMenuItem onClick={() => onEdit(todo)}>수정</DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => onDelete(todo.id)}>삭제</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
