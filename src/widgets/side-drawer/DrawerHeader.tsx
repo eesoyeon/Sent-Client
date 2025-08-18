@@ -8,7 +8,7 @@ const DrawerHeader = ({ onClose }: { onClose: () => void }) => (
       variant="ghost"
       size="sm"
       onClick={onClose}
-      className="text-gray-300 hover:text-white rounded-full p-2"
+      className="text-gray-300 hover:text-white rounded-full p-1"
     >
       <X className="h-5 w-5" />
     </Button>

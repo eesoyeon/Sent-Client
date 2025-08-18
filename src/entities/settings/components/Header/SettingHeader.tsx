@@ -8,7 +8,7 @@ interface SettingHeaderProps {
 
 const SettingHeader = ({ title, onClick }: SettingHeaderProps) => {
   return (
-    <header className="flex items-center p-4 pl-0">
+    <header className="flex items-center py-4">
       <button onClick={onClick}>
         <ChevronLeft className="h-9 w-9" />
       </button>

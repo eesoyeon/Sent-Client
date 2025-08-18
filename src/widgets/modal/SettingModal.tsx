@@ -1,7 +1,7 @@
-import AlarmSettingModal from '@/entities/settings/components/Sent/AlarmSettingModal';
-import ProfileSettingModal from '@/entities/settings/components/Sent/ProfileSettingModal';
-import CategorySettingModal from '@/entities/settings/components/Todos/CategorySettingModal';
-import ViewSettingModal from '@/entities/settings/components/Todos/ViewSettingModal';
+import AlarmSettingModal from '@/entities/settings/components/sent/AlarmSettingModal';
+import ProfileSettingModal from '@/entities/settings/components/sent/ProfileSettingModal';
+import CategorySettingModal from '@/entities/settings/components/todos/CategorySettingModal';
+import ViewSettingModal from '@/entities/settings/components/todos/ViewSettingModal';
 import React from 'react';
 
 interface SettingModalProps {

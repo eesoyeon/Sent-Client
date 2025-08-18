@@ -128,7 +128,7 @@ const CustomCalendar = ({ selectedDate, onDateSelect, getTodosForDate }: Minimal
           className="h-8 w-8 text-gray-600 hover:text-gray-400 transition-colors text-xs font-medium rounded-full"
           onClick={() => onDateSelect(date)}
         >
-          <div className="flex flex-col items-center justify-center h-8 w-8">
+          <div className="flex flex-col items-center justify-center h-8 w-8 -space-y-1">
             <span className={`h-5 w-5`}>{lastDayOfPrevMonth - i}</span>
             {status.total > 0 && (
               <Circle className="h-1 w-1 rounded-full bg-gray-600 text-gray-600" />
@@ -150,10 +150,10 @@ const CustomCalendar = ({ selectedDate, onDateSelect, getTodosForDate }: Minimal
           onClick={() => onDateSelect(date)}
           className={`relative h-8 w-8 text-xs  font-medium transition-colors rounded-full ${styles}`}
         >
-          <div className="flex flex-col items-center justify-center h-8 w-8">
+          <div className="flex flex-col items-center justify-center h-8 w-8 -space-y-1">
             <span className={`h-5 w-5`}>{day}</span>
             {status.total > 0 && (
-              <Circle className="h-1 w-1 rounded-full bg-gray-400 text-gray-400" />
+              <Circle className="h-1 w-1 rounded-full bg-gray-500 text-gray-500" />
             )}
             {/* {!status.isEmpty && (
               <div className="text-[10px] opacity-70 leading-none">
@@ -177,7 +177,7 @@ const CustomCalendar = ({ selectedDate, onDateSelect, getTodosForDate }: Minimal
           className="h-8 w-8 text-gray-600 hover:text-gray-400 transition-colors text-xs font-medium rounded-full"
           onClick={() => onDateSelect(date)}
         >
-          <div className="flex flex-col items-center justify-center h-8 w-8">
+          <div className="flex flex-col items-center justify-center h-8 w-8 -space-y-1">
             <span className={`h-5 w-5`}>{day}</span>
             {status.total > 0 && (
               <Circle className="h-1 w-1 rounded-full bg-gray-600 text-gray-600" />

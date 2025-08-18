@@ -9,7 +9,7 @@ const DrawerSection = ({ title, items }: DrawerSectionProps) => {
   return (
     <>
       <h2 className="text-gray-500 font-semibold text-sm mb-4">{title}</h2>
-      <nav className="flex flex-col space-y-3 mb-10">
+      <nav className="flex flex-col space-y-3 mb-8">
         {items.map(item => (
           <button
             key={item.id}
