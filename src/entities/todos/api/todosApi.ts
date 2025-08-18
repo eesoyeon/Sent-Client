@@ -1,4 +1,4 @@
-import { CreateTodoRequest, Todo } from '@/entities/todos/types/TodoTypes';
+import { CreateTodoRequest, Todo, UpdateTodoRequest } from '@/entities/todos/types/TodoTypes';
 import axiosInstance from '@/shared/lib/axios';
 
 export const getTodosByMonth = async (year: number, month: number): Promise<Todo[]> => {
@@ -16,8 +16,8 @@ export const createTodo = async (data: CreateTodoRequest): Promise<Todo> => {
   return res.data;
 };
 
-export const updateTodo = async (data: Todo): Promise<Todo> => {
-  const res = await axiosInstance.patch(`/api/v1/todos/${data.id}`, data);
+export const updateTodo = async (id: number, data: UpdateTodoRequest): Promise<Todo> => {
+  const res = await axiosInstance.patch(`/api/v1/todos/${id}`, data);
   return res.data;
 };
 

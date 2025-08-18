@@ -6,7 +6,7 @@ import {
   markDoneTodo,
   updateTodo,
 } from '@/entities/todos/api/todosApi';
-import { CreateTodoRequest, Todo } from '@/entities/todos/types/TodoTypes';
+import { CreateTodoRequest, Todo, UpdateTodoRequest } from '@/entities/todos/types/TodoTypes';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useGetTodosByMonth = (year: number, month: number) => {
@@ -38,7 +38,7 @@ export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: Todo) => updateTodo(data),
+    mutationFn: ({ id, data }: { id: number; data: UpdateTodoRequest }) => updateTodo(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
     },

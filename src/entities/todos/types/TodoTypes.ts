@@ -19,8 +19,12 @@ export interface Todo {
 
 export interface CreateTodoRequest {
   title: string;
-  category: string;
+  categoryId: number | null;
   scheduledDate: ISODateString;
   scheduledTime: string | null;
   notificationTime: string | null;
+}
+
+export interface UpdateTodoRequest extends Partial<CreateTodoRequest> {
+  isDone?: boolean;
 }
