@@ -1,14 +1,17 @@
 import { Card, CardContent } from '@/shared/ui/radix-ui/card';
-import SettingHeader from '@/entities/settings/components/Header/SettingHeader';
-import CategorySettingItem from '@/entities/settings/components/Todos/CategorySettingItem';
-import CategoryColorCircle from '@/entities/todos/components/category/CategoryColorCircle';
-import { categoryData } from '@/entities/todos/constants/CategoryData';
-import { getSelectItemStyle } from '@/entities/todos/utils/getFormItemStyle';
-import { getIconComponent } from '@/shared/lib/icons';
-import { cn } from '@/shared/lib/utils';
-import { Check, ChevronDown, ChevronRight, CircleDashed, Plus } from 'lucide-react';
-import React from 'react';
-import { useState } from 'react';
+import SettingHeader from '@/entities/settings/components/header/SettingHeader';
+import { useEffect, useRef, useState } from 'react';
+import {
+  useCreateCategory,
+  useDeleteCategory,
+  useGetCategories,
+  useUpdateCategory,
+} from '@/entities/todos/hooks/useCategories';
+import { CreateCategoryRequest } from '@/entities/todos/types/CategoryTypes';
+import CategoryUpdateItem from '@/entities/settings/components/todos/CategoryUpdateItem';
+import CategoryCreateItem from '@/entities/settings/components/todos/CategoryCreateItem';
+import { Accordion } from '@/shared/ui/radix-ui/accordion';
+import { useClickOutside } from '@/shared/hooks/useClickOutside';
 
 interface CategorySettingModalProps {
   isOpen: boolean;
@@ -16,7 +19,73 @@ interface CategorySettingModalProps {
 }
 
 const CategorySettingModal = ({ isOpen, onClose }: CategorySettingModalProps) => {
-  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
+  const [accordionValue, setAccordionValue] = useState<string | undefined>(undefined);
+  const [formCategory, setFormCategory] = useState<CreateCategoryRequest>({
+    name: '',
+    icon: '',
+    color: '',
+  });
+
+  const { data: categories = [], isLoading } = useGetCategories();
+  const { mutate: createCategory } = useCreateCategory();
+  const { mutate: updateCategory } = useUpdateCategory();
+  const { mutate: deleteCatgory } = useDeleteCategory();
+
+  const accordionRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside({
+    ref: accordionRef,
+    callback: () => {
+      setAccordionValue(undefined);
+    },
+  });
+
+  const handleCreate = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formCategory.icon.trim() && formCategory.color.trim()) {
+      createCategory(formCategory, {
+        onSuccess: () => {
+          console.log('카테고리 생성 성공');
+          setFormCategory({ name: '', color: '', icon: '' });
+          setAccordionValue(undefined);
+        },
+      });
+    }
+  };
+
+  const handleUpdate = (e: React.FormEvent, id: number, updated: CreateCategoryRequest) => {
+    e.preventDefault();
+
+    updateCategory(
+      { id, ...updated },
+      {
+        onSuccess: () => {
+          console.log('카테고리 수정 성공');
+          setAccordionValue(undefined);
+        },
+      },
+    );
+  };
+
+  const handleDelete = (e: React.FormEvent, id: number) => {
+    e.preventDefault();
+
+    deleteCatgory(id, {
+      onSuccess: () => {
+        console.log('카테고리 삭제 성공');
+        setAccordionValue(undefined);
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (accordionValue === 'new-category') {
+      console.log('Accordion 열림');
+    } else {
+      console.log('Accordion 닫힘');
+    }
+  }, [accordionValue]);
 
   if (!isOpen) return null;
 
@@ -25,38 +94,38 @@ const CategorySettingModal = ({ isOpen, onClose }: CategorySettingModalProps) =>
       <Card className="w-full max-h-[100dvh] overflow-hidden bg-gray-900 border-gray-800 rounded-t-3xl rounded-b-none border-t flex flex-col">
         <SettingHeader onClick={onClose} title="카테고리 편집" />
 
-        <CardContent className="p-4 space-y-9 flex-1 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden">
-          <div
-            className={cn(
-              'flex justify-between items-center space-x-3 pl-4 bg-gray-800 w-full hover:bg-gray-700/60 rounded-lg',
-            )}
-            onClick={() => setEditingCategoryId('new')}
-          >
-            <CircleDashed className="h-6 w-6 text-gray-400" />
-            <div className={cn('flex items-center w-full py-3 pr-4')}>
-              <div className="flex flex-1 items-center space-x-3">
-                <p className="text-sm font-medium text-white">새로운 카테고리</p>
-                <CategoryColorCircle color="#737373" />
+        <CardContent className="p-4 flex-1 overflow-y-auto scrollbar-none [&::-webkit-scrollbar]:hidden">
+          <div ref={accordionRef}>
+            <Accordion
+              type="single"
+              collapsible
+              value={accordionValue}
+              onValueChange={setAccordionValue}
+            >
+              <div className="mb-9">
+                <CategoryCreateItem
+                  formCategory={formCategory}
+                  setFormCategory={setFormCategory}
+                  accordionValue={accordionValue}
+                  setAccordionValue={setAccordionValue}
+                  onCreate={handleCreate}
+                />
               </div>
-              {editingCategoryId === 'new' ? (
-                <Check className="text-white w-5 h-5" />
-              ) : (
-                <Plus className="text-white w-5 h-5" />
-              )}
-            </div>
-          </div>
 
-          <div>
-            {categoryData.map((category, index) => (
-              <CategorySettingItem
-                key={category.id}
-                category={category}
-                index={index}
-                total={categoryData.length}
-                isActive={editingCategoryId === category.id}
-                onClick={() => setEditingCategoryId(category.id)}
-              />
-            ))}
+              {categories.length > 0 &&
+                categories.map((category, index) => (
+                  <CategoryUpdateItem
+                    key={category.id}
+                    category={category}
+                    index={index}
+                    total={categories.length}
+                    accordionValue={accordionValue}
+                    setAccordionValue={setAccordionValue}
+                    onUpdate={(e, updated) => handleUpdate(e, category.id!, updated)}
+                    onDelete={e => handleDelete(e, category.id!)}
+                  />
+                ))}
+            </Accordion>
           </div>
         </CardContent>
       </Card>
