@@ -1,5 +1,5 @@
 import { categoryColorMap } from '@/entities/todos/constants/CategoryData';
-import { Category } from '@/entities/todos/types/TodoTypes';
+import { Category } from '@/entities/todos/types/CategoryTypes';
 import { getIconComponent } from '@/shared/lib/icons';
 
 interface CategoryItemProps {
