@@ -1,32 +1,38 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CheckCircle2, Plus, TrendingUp } from 'lucide-react';
+import { CheckCircle2, Circle, Plus, TrendingUp } from 'lucide-react';
 import BottomNavigation from '@/widgets/bottom-navigation/BottomNavigation';
 import HeaderNavigation from '@/widgets/header/HeaderNavigation';
-import { CreateTodoRequest } from '@/entities/todos/types/TodoTypes';
+import { CreateTodoRequest, Todo, UpdateTodoRequest } from '@/entities/todos/types/TodoTypes';
 import TodoCreateModal from '@/entities/todos/components/modal/TodoCreateModal';
-import { todoListData } from '@/entities/todos/constants/TodoListData';
-import { categoryData } from '@/entities/todos/constants/CategoryData';
 import CustomCalendar from '@/entities/todos/components/calendar/CustomCalendar';
 import GroupedTodoLists from '@/entities/todos/components/list/GroupedTodoLists';
-import { useCreateTodo, useGetTodosByMonth, useUpdateTodo } from '@/entities/todos/hooks/useTodos';
-import { Category } from '@/entities/todos/types/CategoryTypes';
+import {
+  useCreateTodo,
+  useDeleteTodo,
+  useGetTodosByMonth,
+  useMarkDoneTodo,
+  useUpdateTodo,
+} from '@/entities/todos/hooks/useTodos';
+import { useGetCategories } from '@/entities/todos/hooks/useCategories';
 
 const TodosPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [categories, setCategories] = useState<Category[]>(categoryData);
-  // const [todos, setTodos] = useState<Todo[]>(todoListData);
   const [lastAddedTodoId, setLastAddedTodoId] = useState<number | null>(null);
+  const [todoToEdit, setTodoToEdit] = useState<Todo | null>(null);
 
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth() + 1;
 
   const { data: todos = [], isLoading } = useGetTodosByMonth(year, month);
-  const { mutate: createTodo } = useCreateTodo();
-  const { mutate: updateTodo } = useUpdateTodo();
+  const { mutate: createTodoMutation } = useCreateTodo();
+  const { mutate: updateTodoMutation } = useUpdateTodo();
+  const { mutate: deleteTodoMutation } = useDeleteTodo();
+  const { mutate: markDoneTodo } = useMarkDoneTodo();
+  const { data: categories = [] } = useGetCategories();
 
   const selectedDateString = selectedDate.toLocaleDateString('sv-SE'); // "2025-07-28"
   const todosForSelectedDate = todos.filter(todo => todo.scheduledDate === selectedDateString);
@@ -44,67 +50,64 @@ const TodosPage = () => {
     };
   }, []);
 
-  const toggleTodo = (id: number) => {
-    const current = todos.find(todo => todo.id === id);
-    if (!current) return;
-
-    updateTodo({ ...current, isDone: !current.isDone });
-    // setTodos(todos.map(todo => (todo.id === id ? { ...todo, completed: !todo.isDone } : todo)));
+  const handleCloseModal = () => {
+    setShowCreateModal(false);
+    setTodoToEdit(null);
   };
 
-  const cleanTodoData = (todoData: CreateTodoRequest): CreateTodoRequest => {
-    return {
-      title: todoData.title,
-      category: todoData.category,
-      scheduledDate: todoData.scheduledDate,
-      scheduledTime: todoData.scheduledTime ? `${todoData.scheduledTime}:00` : null,
-      notificationTime: todoData.notificationTime
-        ? `${todoData.scheduledDate}T${todoData.notificationTime.length === 5 ? `${todoData.notificationTime}:00` : todoData.notificationTime}`
-        : null,
-    };
+  const handleEditTodo = (todo: Todo) => {
+    setTodoToEdit(todo);
+    setShowCreateModal(true);
+  };
+
+  const handleDeleteTodo = (id: number) => {
+    deleteTodoMutation(id);
+  };
+
+  const toggleTodo = (id: number) => {
+    const current = todos.find(todo => todo.id === id);
+    console.log('✅ current todo:', current);
+    if (!current) return;
+
+    markDoneTodo({ id, isDone: !current.isDone });
+  };
+
+  const processTodoData = (todoData: CreateTodoRequest): CreateTodoRequest => {
+    const newTodoData = { ...todoData };
+
+    const [yy, mm, dd] = newTodoData.scheduledDate.split('-').map(Number);
+    const [HH, MM] = (newTodoData.scheduledTime ?? '00:00').split(':').map(Number);
+
+    if (newTodoData.scheduledTime && newTodoData.notificationTime) {
+      // const scheduledDateObj = new Date(`${scheduledDateString}T${scheduledTimeString}`);
+      const notificationMinutesAgo = Number(newTodoData.notificationTime);
+
+      // ✅ UTC 기준 Date 생성
+      let scheduledUtc = new Date(Date.UTC(yy, mm - 1, dd, HH, MM, 0));
+
+      // 알림 시간 계산 (분 단위 빼기)
+      scheduledUtc = new Date(scheduledUtc.getTime() - notificationMinutesAgo * 60_000);
+
+      // ✅ ISO 8601 형식 (UTC, Z 포함)
+      newTodoData.notificationTime = scheduledUtc.toISOString();
+    } else {
+      newTodoData.notificationTime = null;
+    }
+
+    newTodoData.scheduledTime = newTodoData.scheduledTime
+      ? `${newTodoData.scheduledTime}:00`
+      : null;
+
+    return newTodoData;
   };
 
   const addTodo = (todoData: CreateTodoRequest) => {
     const newId = Date.now();
 
-    // const newTodo: Todo = {
-    //   ...todoData,
-    //   id: newId,
-    //   createdAt: new Date().toISOString().split('T')[0],
-    //   scheduledDate: todoData.scheduledDate || selectedDateString,
-    // };
-    // setTodos(prevTodos => [newTodo, ...prevTodos]);
-
-    console.log(cleanTodoData(todoData));
-    createTodo(cleanTodoData(todoData));
-    setShowCreateModal(false);
+    createTodoMutation(processTodoData(todoData));
+    handleCloseModal();
     setLastAddedTodoId(newId);
   };
-
-  // const addCategory = (categoryData: Omit<Category, "id">) => {
-  //   const newCategory: Category = {
-  //     ...categoryData,
-  //     id: Date.now().toString(),
-  //   };
-  //   setCategories([...categories, newCategory]);
-  // };
-
-  // const updateCategory = (id: string, categoryData: Partial<Category>) => {
-  //   setCategories(
-  //     categories.map((cat) =>
-  //       cat.id === id ? { ...cat, ...categoryData } : cat
-  //     )
-  //   );
-  // };
-
-  // const deleteCategory = (id: string) => {
-  //   setCategories(categories.filter((cat) => cat.id !== id));
-  //   setTodos(
-  //     todos.map((todo) =>
-  //       todo.categoryId === id ? { ...todo, categoryId: "personal" } : todo
-  //     )
-  //   );
-  // };
 
   // const formatTime = (timeString?: string) => {
   //   if (!timeString) return '';
@@ -114,6 +117,13 @@ const TodosPage = () => {
   //   const displayHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
   //   return `${ampm} ${displayHour}:${minutes}`;
   // };
+
+  const updateTodo = (id: number, updatedTodoData: UpdateTodoRequest) => {
+    const processedData = processTodoData(updatedTodoData as CreateTodoRequest);
+
+    updateTodoMutation({ id, data: processedData });
+    handleCloseModal();
+  };
 
   const formatSelectedDate = (date: Date) => {
     const today = new Date();
@@ -199,47 +209,36 @@ const TodosPage = () => {
         {/* 할 일 목록 - 스태거 애니메이션 */}
         <GroupedTodoLists
           todos={todosForSelectedDate}
+          categories={categories}
           handleToggle={toggleTodo}
           lastAddedTodoId={lastAddedTodoId}
+          onEdit={handleEditTodo}
+          onDelete={handleDeleteTodo}
         />
 
         {/* 빈 상태 - 애니메이션 적용 */}
-        {/* {todosForSelectedDate.length === 0 && (
-          <div
-            className={`text-center py-12 fade-in stagger-3 ${
-              isVisible ? '' : 'opacity-0'
-            }`}
-          >
+        {todosForSelectedDate.length === 0 && (
+          <div className={`text-center py-12 fade-in stagger-3 ${isVisible ? '' : 'opacity-0'}`}>
             <Circle className="h-8 w-8 text-gray-600 mx-auto mb-3" />
             <h3 className="text-base font-medium text-gray-300 mb-1">
-              {formatSelectedDate(selectedDate)}에 할 일이 없습니다
+              {formatSelectedDate(selectedDate)} 할 일이 없습니다
             </h3>
-            <p className="text-sm text-gray-500">
-              아래 버튼을 눌러 새로운 할 일을 추가해보세요
-            </p>
+            <p className="text-sm text-gray-500">+ 버튼을 눌러 새로운 할 일을 추가해보세요</p>
           </div>
-        )} */}
+        )}
       </main>
 
       <TodoCreateModal
         isOpen={showCreateModal}
-        setIsOpen={setShowCreateModal}
-        onSubmit={addTodo}
+        setIsOpen={handleCloseModal}
+        onSubmit={todoToEdit ? data => updateTodo(todoToEdit.id, data) : addTodo}
         categories={categories}
         initialTodoDate={selectedDate}
+        initialTodoData={todoToEdit}
         // selectedDateLabel={formatSelectedDate(selectedDate)}
       />
 
       <BottomNavigation />
-
-      {/* <CategoryManager
-        isOpen={showCategoryManager}
-        onClose={() => setShowCategoryManager(false)}
-        categories={categories}
-        onAddCategory={addCategory}
-        onUpdateCategory={updateCategory}
-        onDeleteCategory={deleteCategory}
-      /> */}
     </div>
   );
 };
