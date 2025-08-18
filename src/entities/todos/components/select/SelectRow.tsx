@@ -8,20 +8,31 @@ export interface SelectRowProps {
   isOpen?: boolean;
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const SelectRow = ({ label, value, icon, isOpen = false, className, onClick }: SelectRowProps) => {
+const SelectRow = ({
+  label,
+  value,
+  icon,
+  isOpen = false,
+  className,
+  onClick,
+  disabled,
+}: SelectRowProps) => {
   const isEmptyValue = value === '없음';
 
   return (
-    <div
+    <button
       className={cn(
-        'flex justify-between items-center px-4 py-3 bg-gray-800 w-full hover:bg-gray-700/60 relative',
+        'flex justify-between items-center px-4 py-3 bg-gray-800 w-full hover:bg-gray-700/60 disabled:hover:bg-gray-800 relative',
         className,
       )}
+      type="button"
       onClick={onClick}
+      disabled={disabled}
     >
-      <p className="flex-grow text-sm font-medium text-gray-300">{label}</p>
+      <p className="flex-grow text-start text-sm font-medium text-gray-300">{label}</p>
 
       <div className="flex items-center space-x-2">
         {icon && <span>{icon}</span>}
@@ -35,7 +46,7 @@ const SelectRow = ({ label, value, icon, isOpen = false, className, onClick }: S
           <ChevronRight className="text-gray-500 w-5 h-5" />
         )}
       </div>
-    </div>
+    </button>
   );
 };
 
